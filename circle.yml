@@ -1,0 +1,15 @@
+machine:
+  node:
+    version: 4.4.2
+  services:
+    - docker
+test:
+  override:
+    - make lint
+    - make tag=$CIRCLE_SHA1
+    - make test
+deployment:
+  production:
+    branch: master
+    commands:
+      - make publish tag=$CIRCLE_SHA1
